@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/nodeappdatabase', {
+mongoose.connect('mongodb+srv://soltanas:si3gr4si3m4@cluster0-64dc2.mongodb.net/test', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
@@ -23,9 +22,9 @@ userSchema.methods.manify = function (next) {
   return next(null, this.name);
 };
 
-
 userSchema.pre('save', function (next) {
   const currentDate = new Date();
+
   this.updated_at = currentDate;
 
   if (!this.created_at)
@@ -92,6 +91,7 @@ const updadeUserPassword = function () {
       console.log('New password is ' + user.password);
       return user.save(function (err) {
         if (err) throw err;
+
         console.log('Uzytkownik ' + user.name + ' zostal pomyslnie zaktualizowany');
       })
     })
@@ -100,6 +100,7 @@ const updadeUserPassword = function () {
 const updateUsername = function () {
   return User.findOneAndUpdate({ username: 'Benny_the_boy' }, { username: 'Benny_the_man' }, { new: true }, function (err, user) {
     if (err) throw err;
+
     console.log('Nazwa uzytkownika po aktualizacji to ' + user.username);
   })
 }
